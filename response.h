@@ -79,7 +79,7 @@ char* processResponse(char *buffer, char *type)
 	return resp;
 }
 
-void sendResponce(char *buffer, int sock, struct sockaddr_in ClntAddr)
+void sendResponse(char *buffer, int sock, struct sockaddr_in ClntAddr)
 {
 	if(sendto(sock, buffer, strlen(buffer), 0, (struct sockaddr *) &ClntAddr, sizeof(ClntAddr)))
 	{
