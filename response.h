@@ -16,7 +16,7 @@
 
 
 char* processResponse(char *buffer, char *type);
-void sendResponce(char *buffer, int messageSize, int sock, struct sockaddr_in ClntAddr);
+void sendResponse(char *buffer, int messageSize, int sock, struct sockaddr_in ClntAddr);
 
 char* processResponse(char *buffer, char *type)
 {
