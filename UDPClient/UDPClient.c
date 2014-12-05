@@ -16,6 +16,8 @@
 
 #include "methods.h"
 
+ssize_t getLines(char **line, FILE* stream);
+
 int main(int argc, char* argv[]) {
 	struct sockaddr_in serverAddress;	//Contains info for server address
 	char buffer[MAX];					//buffer for sending commands
@@ -48,30 +50,23 @@ int main(int argc, char* argv[]) {
 				if((int)buffer[i] < 10) {
 					sleeptime = (unsigned int)buffer[i];
 					sleep(sleeptime);
-					continue;
-				}
-			}
-		}
-		//default sleep time
-		else if(strstr(buffer, "sleep" != NULL)) {
-			sleeptime = 1;
-			sleep(sleeptime);
-			continue;
-		}
+					break;
+				} //if
+			} //for
+		} //if
 		//send regular command
 		else {
 			if(sendto(sock, buffer, MAX, 0, (struct sockaddr *)&serverAddress, sizeof(serverAddress)) < 0) {
 				printf("Error: %s\n", strerr(errno));
 				err_n_die("sendto() failed\n");
-			}
-		}
+			} //if
+		} //else
+	} //while
 
-	}
+	//TODO: Receive data and save data. infinite loop?
 	fclose(cmds);
-
-
-
-}
+	return 0;
+} //main
 
 ssize_t getLines(char **line, FILE* stream) {
 	return getdelim(line, '\n', stream);
