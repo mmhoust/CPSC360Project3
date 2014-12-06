@@ -82,7 +82,7 @@ char* processResponse(char *buffer, char *type)
 	}
 	databuf[k] = '\0';
 	static char resp[1024];
-	sprintf(resp, "1\r\n%s\r\n%d\r\n%s",type,length,databuf);
+	sprintf(resp, "%s\r\n%d\r\n%s",type,length,databuf);
 	free(databuf);
 	return resp;
 }
