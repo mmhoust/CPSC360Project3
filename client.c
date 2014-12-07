@@ -51,6 +51,8 @@ int main(int argc, char* argv[]) {
 					break;
 				} //if
 			} //for
+			//Shouldn't expect a response after sleeping
+			continue;
 		} //if
 
 		//send regular command
