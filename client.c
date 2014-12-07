@@ -17,19 +17,21 @@ int main(int argc, char* argv[]) {
 	unsigned int sleeptime;
 	int sock;							//socket
 
-	if(argc > 2) {
-		printf("ERROR\t%s\n", strerror(errno));
+	if(argc > 2 || argc == 1) {
 		err_n_die("Arguments: ./program <ip address>");
 	}
 
 	//create socket
 	sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+	if(sock < 0) {
+		printf("ERROR\t%s\n", strerror(errno));
+		err_n_die("socket() failed\n");
+	}
 
 	memset(&serverAddress, 0, sizeof(serverAddress));
 	serverAddress.sin_family = AF_INET;
 	serverAddress.sin_port = htons(5000);
 	if(inet_pton(AF_INET, argv[1], &serverAddress.sin_addr.s_addr) == -1) {
-		printf("ERROR\t%s\n", strerror(errno));
 		err_n_die("inet_pton() failed\n");
 	}
 
@@ -55,7 +57,6 @@ int main(int argc, char* argv[]) {
 		//send regular command
 		else {
 			if(sendto(sock, buffer, MAX, 0, (struct sockaddr *)&serverAddress, sizeof(serverAddress)) < 0) {
-				printf("ERROR\t%s\n", strerror(errno));
 				err_n_die("sendto() failed\n");
 			} //if
 		} //else
