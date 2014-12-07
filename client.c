@@ -24,7 +24,6 @@ int main(int argc, char* argv[]) {
 	//create socket
 	sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 	if(sock < 0) {
-		printf("ERROR\t%s\n", strerror(errno));
 		err_n_die("socket() failed\n");
 	}
 
