@@ -21,6 +21,7 @@ Needs the buffer, the udp client socket, and the client address.
 #include <unistd.h>     
 #include <ctype.h>
 
+#include "methods.h"
 
 char* processResponse(char *buffer, char *type);
 void sendResponse(char *buffer, int messageSize, int sock, struct sockaddr_in ClntAddr);
@@ -87,12 +88,13 @@ char* processResponse(char *buffer, char *type)
 	return resp;
 }
 
-void sendResponse(char *buffer, int sock, struct sockaddr_in ClntAddr)
+void sendResponse(char *buffer, struct sockaddr_in ClntAddr)
 {
+	int sock;
+	if ((sock = socket(PF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0)
+        	err_n_die("socket() failed");
+        	
 	if(sendto(sock, buffer, strlen(buffer), 0, (struct sockaddr *) &ClntAddr, sizeof(ClntAddr)))
-	{
-		printf("sendto() failed.\n");
-		exit(0);
-	}
+		err_n_die("sendto() failed");
 }
 
