@@ -8,6 +8,7 @@
 #include <arpa/inet.h>
 #include <errno.h>
 #include <unistd.h>
+#include <string.h>
 
 int getResponse(int sock);
 void processResponse(char *response);
