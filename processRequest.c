@@ -29,12 +29,15 @@ int processRequest(char *request,char messageBuffer[100][20], int bufferPos){
 		port = 8082;
 		strcat(getLine,"GET twist?id=little&lx=0 HTTP/1.1\r\n");
 	}else {
+		int sleeptime = atoi(message);
+		sleep(sleeptime);
 		port = -1;
 	}
-
-	strcat(request,getLine);
-	strcat(request,"Connection: Keep-Alive\r\n");
-	strcat(request,"Host: www.cs.clemson.edu\r\n");
-	strcat(request,"\r\n");
+	if(port != -1){
+		strcat(request,getLine);
+		strcat(request,"Connection: Keep-Alive\r\n");
+		strcat(request,"Host: www.cs.clemson.edu\r\n");
+		strcat(request,"\r\n");
+	}
 	return port;
 }
