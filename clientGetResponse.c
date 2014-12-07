@@ -1,6 +1,7 @@
 #include "client.h"
+#include "methods.h"
 
-int getResponse(int sock) {
+void getResponse(int sock) {
       struct sockaddr_in recAddress;
       struct sockaddr_in clientAddress;
       char buffer[MAX];

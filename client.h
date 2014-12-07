@@ -10,5 +10,5 @@
 #include <unistd.h>
 #include <string.h>
 
-int getResponse(int sock);
+void getResponse(int sock);
 void processResponse(char *response);
