@@ -2,16 +2,16 @@ CPSC360Project3
 ==============
 
 
-UDPServer
+UDPServer (matt clint teddy and spencer)
 
 getRequest(); from udp client
-processRequest();
-sendRequest();
-getResponse();
-processResponse();
-sendResponse();
+processRequest(); - matt
+sendRequest();- spencer
+getResponse(); - spencer
+processResponse(); - clint
+sendResponse(); - clint
 
-UDPClient
+UDPClient (steven)
 
 sendRequest();
 recieveResponse();
