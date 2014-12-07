@@ -1,10 +1,12 @@
-// process request
+// Matt Houston
+
+// tested and works must pass in same buffer passed in to request of REQUIRED size 10 by 20
 
 #include "processRequest.h"
 //returns portnumber
-int processRequest(char *request,char **messageBuffer, int bufferPos){
+int processRequest(char *request,char messageBuffer[100][20], int bufferPos){
 	int port;
-	char getLine[100];
+	char getLine[100] = "";
 	char message[50];
 	strcpy(message,messageBuffer[bufferPos]);
 	// create first line of request
@@ -14,7 +16,7 @@ int processRequest(char *request,char **messageBuffer, int bufferPos){
 	}else if(strcmp(message,"DGPS") == 0){
 		port = 8084;
 		strcat(getLine,"GET state?id=little HTTP/1.1\r\n");
-	}else if(strcmp(message,"LASERS")){
+	}else if(strcmp(message,"LASERS") == 0){
 		port = 8083;
 		strcat(getLine,"GET state?id=little HTTP/1.1\r\n");
 	}else if(strcmp(message,"MOVE") == 0){
@@ -26,6 +28,8 @@ int processRequest(char *request,char **messageBuffer, int bufferPos){
 	}else if(strcmp(message,"STOP") == 0){
 		port = 8082;
 		strcat(getLine,"GET twist?id=little&lx=0 HTTP/1.1\r\n");
+	}else {
+		port = -1;
 	}
 
 	strcat(request,getLine);

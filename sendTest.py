@@ -66,4 +66,26 @@ except socket.error:
         s.close()
         sys.exit()
 
+s.bind((host,5001))
+
+response, addr = s.recv(1024)
+
+index = response.find('\r\n')
+rcode = response[0:index]
+index = index + 2
+rcode = int(rcode)
+index1 = respnse.find('\r\n',index)
+requestType =response[index:index1]
+index1 = index + 2
+index2 = response.find('\r\n',index1)
+length = response[index1:index2]
+length = int(length)
+index2 = index2 + 2
+data = response[index2,index2 + length]
+
+
+print data
+
+
+
 

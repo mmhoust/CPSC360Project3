@@ -1,12 +1,14 @@
-// getRequest
+// Matt Houston
+
+/* this function has been tested and works for recieving a simple message up to 100 chars
+MUST PASS IN BUFFER OF SIZE char[10][20] */
 #include "getRequest.h"
 
 #define MAX 100
 // Will use port 5000
-int getRequest(char **messageBuffer){
+int getRequest(char messageBuffer[100][20], struct sockaddr_in *clntAddr, char *IP){
 	int sock;                        /* Socket */
-    struct sockaddr_in ServAddr; /* Local address */
-    struct sockaddr_in clntAddr; /* Client address */
+    struct sockaddr_in ServAddr; /* Local address */ /* Client address */
     unsigned int clientAddrLen;         /* Length of incoming message */
     char buffer[MAX];        /* Buffer for echo string */
     unsigned short echoServPort;     /* Server port */
@@ -33,20 +35,24 @@ int getRequest(char **messageBuffer){
     for (;;) /* Run forever */
     {
         /* Set the size of the in-out parameter */
-        clientAddrLen = sizeof(clntAddr);
+        clientAddrLen = sizeof(*clntAddr);
 
         /* Block until receive message from a client */
         if ((recvMsgSize = recvfrom(sock, buffer, MAX, 0,
-            (struct sockaddr *) &clntAddr, &clientAddrLen)) < 0)
+            (struct sockaddr *) clntAddr, &clientAddrLen)) < 0)
             err_n_die("recvfrom() failed");
         strcpy(messageBuffer[messageCount],buffer);
         messageCount++;
-        fork();
-        pid = getpid();
+
+        pid = fork();
         if (pid == 0){
         	break;
         }
-        printf("Handling client %s\n", inet_ntoa(clntAddr.sin_addr));
+        // if buffer is full reset it from beginning
+        if(messageCount == 100 && pid != 0){
+            memset(messageBuffer,0,2000);
+            messageCount = 0;
+        }
     }
     return messageCount - 1;
 } 

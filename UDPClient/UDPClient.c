@@ -16,11 +16,11 @@
 
 #include "methods.h"
 
-ssize_t getLines(char **line, FILE* stream);
+ssize_t getLines(char **line, FILE* stream,size_t *len);
 
 int main(int argc, char* argv[]) {
 	struct sockaddr_in serverAddress;	//Contains info for server address
-	char buffer[MAX];					//buffer for sending commands
+	char *buffer = malloc(1024);					//buffer for sending commands
 	FILE* cmds;							//file pointer to commands.txt
 	unsigned int sleeptime;
 	int sock;							//socket
@@ -34,15 +34,16 @@ int main(int argc, char* argv[]) {
 
 	memset(&serverAddress, 0, sizeof(serverAddress));
 	serverAddress.sin_family = AF_INET;
-	serverAddress.sin_port = htons("5000");
-	if(inet_pton(AF_INET, argv[1], serverAddress.sin_addr.s_addr) == -1) {
-		printf("Error: %s\n", strerr(errno));
+	serverAddress.sin_port = htons(5000);
+	if(inet_pton(AF_INET, argv[1], &serverAddress.sin_addr.s_addr) == -1) {
 		err_n_die("inet_pton() failed\n");
 	}
 
 	//read commands from text file.
 	cmds = fopen("commands.txt", "r");
-	while(getLines(&buffer, cmds)) {
+	size_t len = 0;
+	int i = 0;
+	while(getLines(&buffer, cmds,&len) != -1) {
 		//Get sleep time
 		if(strstr(buffer, "sleep") != NULL){
 			int i = 0;
@@ -57,17 +58,17 @@ int main(int argc, char* argv[]) {
 		//send regular command
 		else {
 			if(sendto(sock, buffer, MAX, 0, (struct sockaddr *)&serverAddress, sizeof(serverAddress)) < 0) {
-				printf("Error: %s\n", strerr(errno));
 				err_n_die("sendto() failed\n");
 			} //if
 		} //else
 	} //while
 
 	//TODO: Receive data and save data. infinite loop?
+	free(buffer);
 	fclose(cmds);
 	return 0;
 } //main
 
-ssize_t getLines(char **line, FILE* stream) {
-	return getdelim(line, '\n', stream);
+ssize_t getLines(char **line, FILE* stream ,size_t *len) {
+	return getdelim(line, len,'\n', stream);
 }
