@@ -18,6 +18,7 @@ int main(int argc, char* argv[]) {
 	int sock;							//socket
 
 	if(argc > 2) {
+		printf("ERROR\t%s\n", strerror(errno));
 		err_n_die("Arguments: ./program <ip address>");
 	}
 
@@ -28,6 +29,7 @@ int main(int argc, char* argv[]) {
 	serverAddress.sin_family = AF_INET;
 	serverAddress.sin_port = htons(5000);
 	if(inet_pton(AF_INET, argv[1], &serverAddress.sin_addr.s_addr) == -1) {
+		printf("ERROR\t%s\n", strerror(errno));
 		err_n_die("inet_pton() failed\n");
 	}
 
@@ -53,11 +55,12 @@ int main(int argc, char* argv[]) {
 		//send regular command
 		else {
 			if(sendto(sock, buffer, MAX, 0, (struct sockaddr *)&serverAddress, sizeof(serverAddress)) < 0) {
+				printf("ERROR\t%s\n", strerror(errno));
 				err_n_die("sendto() failed\n");
 			} //if
 		} //else
 		//Block until we get response
-		getResponse();
+		getResponse(sock);
 	} //while
 
 	//TODO: Receive data and save data. infinite loop?

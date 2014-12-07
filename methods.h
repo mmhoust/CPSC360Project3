@@ -13,5 +13,3 @@
 
 
 void err_n_die(const char* msg);
-
-
