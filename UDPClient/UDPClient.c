@@ -20,7 +20,7 @@ ssize_t getLines(char **line, FILE* stream,size_t *len);
 
 int main(int argc, char* argv[]) {
 	struct sockaddr_in serverAddress;	//Contains info for server address
-	char *buffer = malloc(1024);					//buffer for sending commands
+	char *buffer = (char*) malloc(1024);					//buffer for sending commands
 	FILE* cmds;							//file pointer to commands.txt
 	unsigned int sleeptime;
 	int sock;							//socket
@@ -42,7 +42,7 @@ int main(int argc, char* argv[]) {
 	//read commands from text file.
 	cmds = fopen("commands.txt", "r");
 	size_t len = 0;
-	int i = 0;
+
 	while(getLines(&buffer, cmds,&len) != -1) {
 		//Get sleep time
 		if(strstr(buffer, "sleep") != NULL){
