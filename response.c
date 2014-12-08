@@ -59,15 +59,12 @@ char* processResponse(char *buffer, char *type)
 	static char resp[1024];
 	sprintf(resp, "%s\r\n%d\r\n%s",type,length,databuf);
 	free(databuf);
+printf("%s\n",resp);
 	return resp;
 }
 
-void sendResponse(char *buffer, struct sockaddr_in ClntAddr)
+void sendResponse(char *buffer, int sock, struct sockaddr_in ClntAddr)
 {
-	int sock;
-	if ((sock = socket(PF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0)
-        	err_n_die("socket() failed");
-        	
 	if(sendto(sock, buffer, strlen(buffer), 0, (struct sockaddr *) &ClntAddr, sizeof(ClntAddr)))
 		err_n_die("sendto() failed");
 }
