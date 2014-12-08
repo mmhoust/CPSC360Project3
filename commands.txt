@@ -1,0 +1,22 @@
+GPS
+DGPS
+MOVE
+sleep 5 seconds
+STOP
+sleep 1 seconds
+GPS
+DGPS
+TURN
+sleep 1 seconds
+GPS
+DGPS
+STOP
+sleep 1 seconds
+GPS
+DGPS
+MOVE
+sleep 5 seconds
+STOP
+sleep 1 seconds
+GPS
+DGPS
