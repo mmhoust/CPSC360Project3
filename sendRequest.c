@@ -1,10 +1,8 @@
 #include "methods.h"
 
 
-char * sendRequest(char * requestData, int portNumber)
+char * sendRequest(char * requestData, int portNumber, char * recievedData)
 {
-    recievedData[1024];
-
 	struct sockaddr_in serverAddr;
     memset(&serverAddr, 0, sizeof(serverAddr));
 
