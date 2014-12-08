@@ -16,7 +16,7 @@ int main(){
   int       rosock;
 
 
-  if((sock = socket(PF_INET, SOCK_DGRAM, IPPROTO_UDP)) > 0)
+  if((sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) > 0)
     err_n_die("socket() failed\n");
   memset(&servAddr, 0, sizeof(servAddr));
   servAddr.sin_family = AF_INET;
@@ -29,6 +29,7 @@ int main(){
 
     roport   = getRequest(buffer, &clntAddr, sock);
     rosock   = processRequest(request, buffer);
+    printf("request = %s\n",request);
     //response = getResponse(rosock);
     //udpresponse = processResponse(response, buffer);
     //sendResponse(udpresponse, strlen(udpresponse, sock, clntaddr));
