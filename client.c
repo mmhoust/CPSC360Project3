@@ -15,6 +15,7 @@ int main(int argc, char* argv[]) {
 	FILE* cmds;							//file pointer to commands.txt
 	unsigned int sleeptime;
 	int sock1;							//socket
+	int sock2;
 
 	if(argc > 2 || argc == 1) {
 		err_n_die("Arguments: ./program <ip address>");
