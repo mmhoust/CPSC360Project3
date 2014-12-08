@@ -10,6 +10,7 @@
 
 int main(int argc, char* argv[]) {
 	struct sockaddr_in serverAddress;	//Contains info for server address
+	struct sockaddr_in hostAddress; //contains information for binding
 	char *buffer = (char*) malloc(1024);					//buffer for sending commands
 	FILE* cmds;							//file pointer to commands.txt
 	unsigned int sleeptime;
@@ -25,11 +26,23 @@ int main(int argc, char* argv[]) {
 		err_n_die("socket() failed\n");
 	}
 
+	if(bind(sock,))
+
 	memset(&serverAddress, 0, sizeof(serverAddress));
+
 	serverAddress.sin_family = AF_INET;
 	serverAddress.sin_port = htons(5000);
 	if(inet_pton(AF_INET, argv[1], &serverAddress.sin_addr.s_addr) == -1) {
 		err_n_die("inet_pton() failed\n");
+	}
+
+	//bind to port
+	memset(&hostAddress, 0, sizeof(hostAddress));
+	hostAddress.sin_family = AF_INET;
+	hostAddress.sin_addr.s_addr = htonl(INADDR_ANY);
+	hostAddress.htons(5001);
+	if(bind(socket, (struct sockaddr *)&hostAddress, sizeof(hostAddress)) < 0) {
+		err_n_die("bind() failed\n");
 	}
 
 	//read commands from text file.
@@ -42,7 +55,7 @@ int main(int argc, char* argv[]) {
 			//Get ready for bed.
 			int i = 0;
 			for(i = 0; i < strlen(buffer); i++) {
-				if(atoi(buffer[i]) < 10) {
+				if(atoi(&buffer[i]) < 10) {
 					//good night
 					sleeptime = (unsigned int)buffer[i];
 					sleep(sleeptime);
