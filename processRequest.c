@@ -10,22 +10,22 @@ int processRequest(char *request,char *messageBuffer){
 	char message[50];
 	strcpy(message,messageBuffer);
 	// create first line of request
-	if(strcmp(message,"GPS") == 0){
+	if(strcmp(message,"GPS\n") == 0){
 		port = 8082;
 		strcat(getLine,"GET state?id=little HTTP/1.1\r\n");
-	}else if(strcmp(message,"DGPS") == 0){
+	}else if(strcmp(message,"DGPS\n") == 0){
 		port = 8084;
 		strcat(getLine,"GET state?id=little HTTP/1.1\r\n");
-	}else if(strcmp(message,"LASERS") == 0){
+	}else if(strcmp(message,"LASERS\n") == 0){
 		port = 8083;
 		strcat(getLine,"GET state?id=little HTTP/1.1\r\n");
-	}else if(strcmp(message,"MOVE") == 0){
+	}else if(strcmp(message,"MOVE\n") == 0){
 		port = 8082;
 		strcat(getLine,"GET twist?id=little&lx=4 HTTP/1.1\r\n");
-	}else if(strcmp(message,"TURN") == 0){
+	}else if(strcmp(message,"TURN\n") == 0){
 		port = 8082;
 		strcat(getLine,"GET twist?id=little&az=30 HTTP/1.1\r\n");
-	}else if(strcmp(message,"STOP") == 0){
+	}else if(strcmp(message,"STOP\n") == 0){
 		port = 8082;
 		strcat(getLine,"GET twist?id=little&lx=0 HTTP/1.1\r\n");
 	}else {
@@ -39,3 +39,4 @@ int processRequest(char *request,char *messageBuffer){
 	}
 	return port;
 }
+
