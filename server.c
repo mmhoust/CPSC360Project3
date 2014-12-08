@@ -1,6 +1,4 @@
-#include "getRequest.h"
-#include "proccessRequest.h"
-#include "client.h"
+#include "methods.h"
 
 int main(){
   char               buffer[50];
