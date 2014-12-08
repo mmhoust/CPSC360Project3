@@ -14,19 +14,18 @@ int main(int argc, char* argv[]) {
 	char *buffer = (char*) malloc(1024);					//buffer for sending commands
 	FILE* cmds;							//file pointer to commands.txt
 	unsigned int sleeptime;
-	int sock;							//socket
+	int sock1;							//socket
 
 	if(argc > 2 || argc == 1) {
 		err_n_die("Arguments: ./program <ip address>");
 	}
 
 	//create socket
-	sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-	if(sock < 0) {
+	sock1 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+	sock2 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+	if(sock1 < 0 || sock2 < 0) {
 		err_n_die("socket() failed\n");
 	}
-
-	if(bind(sock,))
 
 	memset(&serverAddress, 0, sizeof(serverAddress));
 
@@ -36,12 +35,12 @@ int main(int argc, char* argv[]) {
 		err_n_die("inet_pton() failed\n");
 	}
 
-	//bind to port
+	//bind sock2
 	memset(&hostAddress, 0, sizeof(hostAddress));
 	hostAddress.sin_family = AF_INET;
 	hostAddress.sin_addr.s_addr = htonl(INADDR_ANY);
 	hostAddress.htons(5001);
-	if(bind(socket, (struct sockaddr *)&hostAddress, sizeof(hostAddress)) < 0) {
+	if(bind(sock2, (struct sockaddr *)&hostAddress, sizeof(hostAddress)) < 0) {
 		err_n_die("bind() failed\n");
 	}
 
@@ -68,12 +67,12 @@ int main(int argc, char* argv[]) {
 
 		//send regular command
 		else {
-			if(sendto(sock, buffer, MAX, 0, (struct sockaddr *)&serverAddress, sizeof(serverAddress)) < 0) {
+			if(sendto(sock1, buffer, MAX, 0, (struct sockaddr *)&serverAddress, sizeof(serverAddress)) < 0) {
 				err_n_die("sendto() failed\n");
 			} //if
 		} //else
 		//Block until we get response
-		getResponse(sock);
+		getResponse(sock2);
 	} //while
 
 	//TODO: Receive data and save data. infinite loop?
