@@ -40,7 +40,7 @@ int main(int argc, char* argv[]) {
 	memset(&hostAddress, 0, sizeof(hostAddress));
 	hostAddress.sin_family = AF_INET;
 	hostAddress.sin_addr.s_addr = htonl(INADDR_ANY);
-	hostAddress.htons(5001);
+	hostAddress.sin_port = htons(5001);
 	if(bind(sock2, (struct sockaddr *)&hostAddress, sizeof(hostAddress)) < 0) {
 		err_n_die("bind() failed\n");
 	}
