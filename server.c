@@ -15,25 +15,27 @@ int main(){
   int                recvMsgSize;
   unsigned short     port = 5000;
   unsigned short     roport;
-  int       port;
+ 
 
-
-  if((sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) > 0)
+  
+  if((sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0)
     err_n_die("socket() failed\n");
   memset(&servAddr, 0, sizeof(servAddr));
   servAddr.sin_family = AF_INET;
   servAddr.sin_addr.s_addr = htonl(INADDR_ANY);
   servAddr.sin_port = htons(port);
-  if(bind(sock, (struct sockaddr *) &servAddr, sizeof(servAddr)) > 0)
+  if(bind(sock, (struct sockaddr *) &servAddr, sizeof(servAddr)) < 0)
     err_n_die("bind() failed\n");
 
   while(1){
-
+    memset(buffer,0,50);	
+    memset(response,0,1024);
+    memset(request,0,1024);
     getRequest(buffer, &clntAddr, sock);
     roport   = processRequest(request, buffer);
     printf("request = %s\n",request);
-    response = sendRequest(request,roport,response);
-    udpresponse = processResponse(response, buffer);
-    //sendResponse(udpresponse, strlen(udpresponse, sock, clntaddr));
+    sendRequest(request,roport,response);
+    processResponse(response, buffer,udpresponse);
+    sendResponse(udpresponse, sock, clntAddr);
   }
 }

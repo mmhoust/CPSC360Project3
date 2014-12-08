@@ -1,6 +1,6 @@
 #include "response.h"
 
-char* processResponse(char *buffer, char *type)
+char* processResponse(char *buffer, char *type, char*resp)
 {
 	char *i;
 	int data = 0;
@@ -43,7 +43,7 @@ char* processResponse(char *buffer, char *type)
 					tbuf  += l + 2;
 					strcpy(len, tbuf);
 					length = atoi(len);
-					databuf = (char *)malloc((length+1)*sizeof(char));
+					databuf = (char *)malloc((length+1)*sizeof(char)+1);
 				}
 				j = 0;
 				memset(&buf[0],'\0',sizeof(buf));
@@ -56,7 +56,7 @@ char* processResponse(char *buffer, char *type)
 		}
 	}
 	databuf[k] = '\0';
-	static char resp[1024];
+
 	sprintf(resp, "%s\r\n%d\r\n%s",type,length,databuf);
 	free(databuf);
 printf("%s\n",resp);

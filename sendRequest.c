@@ -1,7 +1,7 @@
 #include "methods.h"
 
 
-char * sendRequest(char * requestData, int portNumber, char * recievedData)
+void sendRequest(char * requestData, int portNumber, char * recievedData)
 {
 	struct sockaddr_in serverAddr;
     memset(&serverAddr, 0, sizeof(serverAddr));
@@ -27,5 +27,5 @@ char * sendRequest(char * requestData, int portNumber, char * recievedData)
     // Clost TCP Socket
     close(tcpSocket);
 
-    return recievedData;
+
 }

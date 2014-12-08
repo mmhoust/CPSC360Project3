@@ -23,5 +23,5 @@ Needs the buffer, the udp client socket, and the client address.
 
 #include "methods.h"
 
-char* processResponse(char *buffer, char *type);
+char* processResponse(char *buffer, char *type, char* resp);
 void sendResponse(char *buffer, int sock, struct sockaddr_in ClntAddr);
