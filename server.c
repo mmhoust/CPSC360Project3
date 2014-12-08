@@ -2,9 +2,9 @@
 
 int main(){
   char               buffer[50];
-  char               *udpresponse;
-  char               *response;
-  char               *request;
+  char               udpresponse[1024];
+  char               response[1024];
+  char               request[1024];
   struct sockaddr_in servAddr;
   struct sockaddr_in clntAddr;
   int                sock;
