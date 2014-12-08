@@ -6,7 +6,7 @@ MUST PASS IN BUFFER OF SIZE char[10][20] */
 
 #define MAX 100
 // Will use port 5000
-int getRequest(char *messageBuffer, struct sockaddr_in *clntAddr){
+int getRequest(char *messageBuffer, struct sockaddr_in *clntAddr,int sock){
 	int sock;                        /* Socket */
 
     unsigned int clientAddrLen;         /* Length of incoming message */
