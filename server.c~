@@ -2,7 +2,6 @@
 #include "getRequest.h"
 #include "processRequest.h"
 #include "sendRequest.c"
-#include "response.h"
 
 int main(){
   char               buffer[50];
@@ -33,7 +32,7 @@ int main(){
     roport   = processRequest(request, buffer);
     printf("request = %s\n",request);
     response = sendRequest(request,roport,response);
-    udpresponse = processResponse(response, buffer);
+    //udpresponse = processResponse(response, buffer);
     //sendResponse(udpresponse, strlen(udpresponse, sock, clntaddr));
   }
 }
