@@ -78,5 +78,7 @@ int main(int argc, char* argv[]) {
 	//TODO: Receive data and save data. infinite loop?
 	free(buffer);
 	fclose(cmds);
+	close(sock1);
+	close(sock2);
 	return 0;
 } //main
