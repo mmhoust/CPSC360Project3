@@ -2,6 +2,7 @@
 
 int main(){
   char               buffer[50];
+  char               *udpresponse;
   char               *response;
   char               *request;
   struct sockaddr_in servAddr;
@@ -10,6 +11,7 @@ int main(){
   int                recvMsgSize;
   unsigned short     port = 5000;
   unsigned short     roport;
+  int       rosock;
   
   
   if((sock = socket(PF_INET, SOCK_DGRAM, IPPROTO_UDP)) > 0)
