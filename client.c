@@ -8,8 +8,6 @@
 #include "client.h"
 #include "methods.h"
 
-ssize_t getLines(char **line, FILE* stream,size_t *len);
-
 int main(int argc, char* argv[]) {
 	struct sockaddr_in serverAddress;	//Contains info for server address
 	char *buffer = (char*) malloc(1024);					//buffer for sending commands
@@ -37,14 +35,14 @@ int main(int argc, char* argv[]) {
 	//read commands from text file.
 	cmds = fopen("commands.txt", "r");
 	size_t len = 0;
-	while(getLines(&buffer, cmds,&len) != -1) {
+	while(getline(&buffer, &len, cmds) != -1) {
 
 		//Get sleep time
 		if(strstr(buffer, "sleep") != NULL){
 			//Get ready for bed.
 			int i = 0;
 			for(i = 0; i < strlen(buffer); i++) {
-				if((int)buffer[i] < 10) {
+				if(atoi(buffer[i]) < 10) {
 					//good night
 					sleeptime = (unsigned int)buffer[i];
 					sleep(sleeptime);
@@ -70,7 +68,3 @@ int main(int argc, char* argv[]) {
 	fclose(cmds);
 	return 0;
 } //main
-
-ssize_t getLines(char **line, FILE* stream ,size_t *len) {
-	return getdelim(line, len,'\n', stream);
-}
