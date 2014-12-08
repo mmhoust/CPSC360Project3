@@ -23,10 +23,10 @@ int main(){
 
   while(1){
     
-    getRequest(sock, buffer, clntAddr);
-    roport = proccessRequest(request, buffer);
-    getResponse();
-    processResponse();
-    sendResponse();
+    roport   = getRequest(sock, buffer, clntAddr);
+    rosock   = proccessRequest(request, buffer);
+    response = getResponse(rosock);
+    udpresponse = processResponse(response, buffer);
+    sendResponse(udpresponse, strlen(udpresponse, sock, clntaddr));
   }
 }
