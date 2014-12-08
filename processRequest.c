@@ -8,7 +8,7 @@ int processRequest(char *request,char *messageBuffer){
 	int port;
 	char getLine[100] = "";
 	char message[50];
-	strcpy(message,messageBuffer[bufferPos]);
+	strcpy(message,messageBuffer);
 	// create first line of request
 	if(strcmp(message,"GPS") == 0){
 		port = 8082;
