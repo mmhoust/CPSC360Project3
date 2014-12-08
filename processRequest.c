@@ -4,7 +4,7 @@
 
 #include "processRequest.h"
 //returns portnumber
-int processRequest(char *request,char messageBuffer[100][20], int bufferPos){
+int processRequest(char *request,char *messageBuffer){
 	int port;
 	char getLine[100] = "";
 	char message[50];
@@ -29,8 +29,6 @@ int processRequest(char *request,char messageBuffer[100][20], int bufferPos){
 		port = 8082;
 		strcat(getLine,"GET twist?id=little&lx=0 HTTP/1.1\r\n");
 	}else {
-		int sleeptime = atoi(message);
-		sleep(sleeptime);
 		port = -1;
 	}
 	if(port != -1){
